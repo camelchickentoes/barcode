@@ -85,3 +85,17 @@ function setStatus(id, status) {
   statusEl.className = 'scan-status status-' + status;
   statusEl.textContent = status.charAt(0).toUpperCase() + status.slice(1);
 }
+
+function toggleInfoPopup() {
+  const popup = document.getElementById('info-popup');
+  popup.classList.toggle('hidden');
+}
+
+// Close popup when clicking outside
+document.addEventListener('click', (e) => {
+  const popup = document.getElementById('info-popup');
+  const icon = document.querySelector('.info-icon');
+  if (!popup.contains(e.target) && !icon.contains(e.target)) {
+    popup.classList.add('hidden');
+  }
+});

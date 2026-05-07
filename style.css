@@ -203,3 +203,62 @@ button.hidden { display: none; }
 .action-btn:hover { transform: scale(1.1); opacity: 1; }
 .approve-btn { background: #0d3d2a; color: #00e5a0; }
 .deny-btn { background: #3d0d0d; color: #ff6b6b; }
+
+.info-icon {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #00e5a0;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.info-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 229, 160, 0.4);
+}
+
+.info-popup {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.5rem;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 1rem;
+  z-index: 1001;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  min-width: 250px;
+}
+
+.info-popup.hidden {
+  display: none;
+}
+
+.info-content p {
+  color: #fff;
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+}
+
+.info-content a {
+  color: #00e5a0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+
+.info-content a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}

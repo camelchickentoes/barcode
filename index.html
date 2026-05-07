@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barcode Scanner</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Barcode Scanner</h1>
+
+    <div class="video-wrapper">
+      <video id="video" playsinline></video>
+      <div class="overlay"></div>
+    </div>
+
+    <div id="result-box" class="result-box hidden">
+      <p class="result-label">Scanned Result</p>
+      <p id="result-text" class="result-text"></p>
+      <p id="result-format" class="result-format"></p>
+    </div>
+
+    <div class="controls">
+      <button id="start-btn" onclick="startScanner()">Start Scanner</button>
+      <button id="stop-btn" onclick="stopScanner()" class="hidden">Stop Scanner</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

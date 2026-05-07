@@ -8,23 +8,21 @@ async function startScanner() {
   scanning = true;
 
   try {
-    const devices = await ZXing.BrowserMultiFormatReader.listVideoInputDevices();
-    const backCamera = devices.find(d =>
-      d.label.toLowerCase().includes('back') ||
-      d.label.toLowerCase().includes('rear') ||
-      d.label.toLowerCase().includes('environment')
-    );
-    const deviceId = backCamera ? backCamera.deviceId : devices[devices.length - 1].deviceId;
-
-    await codeReader.decodeFromVideoDevice(deviceId, 'video', (result, err) => {
-      if (result && scanning) {
-        document.getElementById('result-text').textContent = result.getText();
-        document.getElementById('result-format').textContent = 'Format: ' + result.getBarcodeFormat();
-        document.getElementById('result-box').classList.remove('hidden');
-
-        navigator.vibrate?.(200);
+    await codeReader.decodeFromConstraints(
+      {
+        audio: false,
+        video: { facingMode: 'environment' }
+      },
+      'video',
+      (result, err) => {
+        if (result && scanning) {
+          document.getElementById('result-text').textContent = result.getText();
+          document.getElementById('result-format').textContent = 'Format: ' + result.getBarcodeFormat();
+          document.getElementById('result-box').classList.remove('hidden');
+          navigator.vibrate?.(200);
+        }
       }
-    });
+    );
   } catch (err) {
     alert('Camera error: ' + err.message);
     stopScanner();

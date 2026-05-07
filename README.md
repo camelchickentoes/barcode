@@ -1,0 +1,1 @@
+simple engineering project using javascript to use devices camera to scan a barcode using libraries i found somewhere

@@ -61,7 +61,7 @@ async function startScanner() {
       }
 
       if (result && scanning) {
-        const text = result.getText();
+        const text = result.getText().trim();
         const format = result.getBarcodeFormat();
 
         // Only allow a repeated ID after a different ID has been scanned first

@@ -63,12 +63,11 @@ async function startScanner() {
       if (result && scanning) {
         const text = result.getText();
         const format = result.getBarcodeFormat();
-        const now = Date.now();
 
-        // Prevent duplicate scans within 2 seconds
-        if (text === lastScanned && now - lastScannedTime < 2000) return;
+        // Only allow a repeated ID after a different ID has been scanned first
+        if (text === lastScanned) return;
+
         lastScanned = text;
-        lastScannedTime = now;
 
         addScanToList(text, format);
         navigator.vibrate?.(200);

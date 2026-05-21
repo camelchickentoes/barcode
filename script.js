@@ -15,6 +15,17 @@ let lastScanned = '';
 let lastScannedTime = 0;
 let currentStream = null;
 
+const customIdImages = new Map([
+  ['ABC123', 'https://via.placeholder.com/96/00e5a0/000000?text=ABC'],
+  ['XYZ789', 'https://via.placeholder.com/96/ff6b6b/000000?text=XYZ'],
+  // Add your own ID-to-image mappings here
+]);
+
+function getImageForId(text) {
+  if (!text) return null;
+  return customIdImages.get(text) || null;
+}
+
 async function enableTorch(stream) {
   const [track] = stream.getVideoTracks();
   if (!track || typeof track.getCapabilities !== 'function') return;
@@ -46,7 +57,7 @@ async function startScanner() {
     await video.play();
     await enableTorch(stream);
 
-    codeReader.decodeFromVideoElement(video, (result, err) => {
+    await codeReader.decodeFromVideoElementContinuously(video, (result, err) => {
       if (result && scanning) {
         const text = result.getText();
         const format = result.getBarcodeFormat();
@@ -94,10 +105,13 @@ function addScanToList(text, format) {
 
   const id = 'scan-' + scanCount;
 
+  const imageUrl = getImageForId(text);
+
   const item = document.createElement('div');
   item.className = 'scan-item';
   item.id = id;
   item.innerHTML = `
+    ${imageUrl ? `<img class="scan-avatar" src="${imageUrl}" alt="ID image" />` : ''}
     <div class="scan-info">
       <div class="scan-value">${text}</div>
       <div class="scan-format">${format}</div>

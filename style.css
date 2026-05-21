@@ -148,6 +148,15 @@ button.hidden { display: none; }
 
 .scan-item:hover { background: #222; }
 
+.scan-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid #2a2a2a;
+}
+
 .scan-info {
   flex: 1;
   overflow: hidden;

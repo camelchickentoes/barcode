@@ -16,7 +16,7 @@ let lastScannedTime = 0;
 let currentStream = null;
 
 const customIdImages = new Map([
-  ['ABC123', 'https://via.placeholder.com/96/00e5a0/000000?text=ABC'],
+  ['4157984206', 'https://github.com/camelchickentoes/barcode/blob/f6ce6d4c5f3cb407cb0680eef355fd23db322b8b/cd804595-3a6e-4e75-a241-e84ac035962d.jpeg'],
   ['XYZ789', 'https://via.placeholder.com/96/ff6b6b/000000?text=XYZ'],
   // Add your own ID-to-image mappings here
 ]);

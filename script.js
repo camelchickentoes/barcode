@@ -16,9 +16,9 @@ let lastScannedTime = 0;
 let currentStream = null;
 
 const customIdImages = new Map([
-  ['4157984206', 'cd804595-3a6e-4e75-a241-e84ac035962d.jpeg'],
+  ['4157984206', './cd804595-3a6e-4e75-a241-e84ac035962d.jpeg'],
   ['XYZ789', 'https://via.placeholder.com/96/ff6b6b/000000?text=XYZ'],
-  // Add your own ID-to-image mappings here
+  // Add your own ID-to-image mappings here using relative paths to files included in this folder.
 ]);
 
 function getImageForId(text) {

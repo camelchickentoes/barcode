@@ -53,11 +53,13 @@ async function startScanner() {
     });
 
     currentStream = stream;
-    video.srcObject = stream;
-    await video.play();
     await enableTorch(stream);
 
-    await codeReader.decodeFromVideoElementContinuously(video, (result, err) => {
+    await codeReader.decodeFromStream(stream, video, (result, err) => {
+      if (err && !(err instanceof ZXing.NotFoundException)) {
+        console.warn('ZXing decode error:', err);
+      }
+
       if (result && scanning) {
         const text = result.getText();
         const format = result.getBarcodeFormat();

@@ -13,6 +13,21 @@ let scanning = false;
 let scanCount = 0;
 let lastScanned = '';
 let lastScannedTime = 0;
+let currentStream = null;
+
+async function enableTorch(stream) {
+  const [track] = stream.getVideoTracks();
+  if (!track || typeof track.getCapabilities !== 'function') return;
+
+  const capabilities = track.getCapabilities();
+  if (!capabilities.torch) return;
+
+  try {
+    await track.applyConstraints({ advanced: [{ torch: true }] });
+  } catch (err) {
+    console.warn('Torch not available:', err);
+  }
+}
 
 async function startScanner() {
   document.getElementById('start-btn').classList.add('hidden');
@@ -20,27 +35,34 @@ async function startScanner() {
   scanning = true;
 
   try {
-    await codeReader.decodeFromConstraints(
-      { audio: false, video: { facingMode: 'environment' } },
-      'video',
-      (result, err) => {
-        if (result && scanning) {
-          const text = result.getText();
-          const format = result.getBarcodeFormat();
-          const now = Date.now();
+    const video = document.getElementById('video');
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' } },
+      audio: false,
+    });
 
-          // Prevent duplicate scans within 2 seconds
-          if (text === lastScanned && now - lastScannedTime < 2000) return;
-          lastScanned = text;
-          lastScannedTime = now;
+    currentStream = stream;
+    video.srcObject = stream;
+    await video.play();
+    await enableTorch(stream);
 
-          addScanToList(text, format);
-          navigator.vibrate?.(200);
-        }
+    codeReader.decodeFromVideoElement(video, (result, err) => {
+      if (result && scanning) {
+        const text = result.getText();
+        const format = result.getBarcodeFormat();
+        const now = Date.now();
+
+        // Prevent duplicate scans within 2 seconds
+        if (text === lastScanned && now - lastScannedTime < 2000) return;
+        lastScanned = text;
+        lastScannedTime = now;
+
+        addScanToList(text, format);
+        navigator.vibrate?.(200);
       }
-    );
+    });
   } catch (err) {
-    alert('Camera error: ' + err.message);
+    alert('Camera error: ' + (err.message || err));
     stopScanner();
   }
 }
@@ -48,6 +70,16 @@ async function startScanner() {
 function stopScanner() {
   scanning = false;
   codeReader.reset();
+
+  if (currentStream) {
+    currentStream.getTracks().forEach((track) => track.stop());
+    currentStream = null;
+  }
+
+  const video = document.getElementById('video');
+  video.pause();
+  video.srcObject = null;
+
   document.getElementById('stop-btn').classList.add('hidden');
   document.getElementById('start-btn').classList.remove('hidden');
 }

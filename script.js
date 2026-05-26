@@ -18,6 +18,7 @@ let currentStream = null;
 const customIdImages = new Map([
   ['4157984206', 'https://raw.githubusercontent.com/camelchickentoes/barcode/main/kaicenat.jpeg'],
   ['4157981692', 'https://raw.githubusercontent.com/camelchickentoes/barcode/main/chad.jpeg'],
+  ['4157647430', 'https://raw.githubusercontent.com/camelchickentoes/barcode/main/kaden.jpeg'],
   // Add your own ID-to-image mappings here using relative paths or URLs.
 ]);
 
